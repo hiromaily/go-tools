@@ -49,6 +49,8 @@ go vet ./...
 #go build -i -v -o ./main ./gotestfile/main.go
 go build -i -v -o ${GOPATH}/bin/gotestfile ./gotestfile/main.go
 
+go build -i -v -o ${GOPATH}/bin/godepen ./godependency/main.go
+
 
 ###########################################################
 # go run
