@@ -1,6 +1,12 @@
 #!/bin/sh
 
 ###########################################################
+# precondition
+###########################################################
+#export ENC_KEY='xxxxxxxxxkeykey'
+#export ENC_IV='xxxxxxxxxxxxiviv'
+
+###########################################################
 # Variable
 ###########################################################
 #export GOTRACEBACK=single
@@ -51,6 +57,7 @@ go build -i -v -o ${GOPATH}/bin/gotestfile ./gotestfile/main.go
 
 go build -i -v -o ${GOPATH}/bin/godepen ./godependency/main.go
 
+go build -i -v -o ${GOPATH}/bin/gocipher ./gocipher/main.go
 
 ###########################################################
 # go run
