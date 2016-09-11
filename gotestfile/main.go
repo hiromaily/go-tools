@@ -20,13 +20,14 @@ Options:
   -n  Package name.
 `
 
+// Params is parameter for template file
 type Params struct {
 	Name      string
 	Uppercase string
 }
 
 func init() {
-	lg.InitializeLog(lg.DEBUG_STATUS, lg.LOG_OFF_COUNT, 0, "[GOTOOLS GOTEST]", "/var/log/go/gotool.log")
+	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GOTEST]", "/var/log/go/gotool.log")
 
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))

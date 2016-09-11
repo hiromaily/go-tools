@@ -2,5 +2,5 @@
 
 {{range .}}
 cd ${GOPATH}{{.DirName}}
-git checkout {{.CmtId}}
+git checkout {{.CmtID}}
 {{end}}

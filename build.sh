@@ -13,6 +13,8 @@
 GOTRACEBACK=all
 CURRENTDIR=`pwd`
 
+GO_LINT=1
+
 ###########################################################
 # Update all package
 ###########################################################
@@ -38,8 +40,12 @@ go vet ./...
 ###########################################################
 # go lint
 ###########################################################
-# it's too strict
-#golint ./...
+#go get -u github.com/golang/lint/golint
+if [ $GO_LINT -eq 1 ]; then
+    #golint ./...
+    #golint `go list ./... | grep -v '/vendor/'`
+    golint ./... | grep -v '^vendor\/' || true
+fi
 
 
 ###########################################################

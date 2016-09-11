@@ -13,16 +13,21 @@ import (
 	"text/template"
 )
 
-const GO_GIT_DIR string = "/src/github.com/"
-const GIT_COMMAND_CMITID string = `git log -n 1 --pretty=format:"%H"`
+//GoGitDir is path for github.com directory
+const GoGitDir string = "/src/github.com/"
+
+//GitCommandCmtID is git command to get commit ID
+const GitCommandCmtID string = `git log -n 1 --pretty=format:"%H"`
 
 var cmdLines = []CmdLines{}
 
+// CmdLines is parameter for template file
 type CmdLines struct {
 	DirName string
-	CmtId   string
+	CmtID   string
 }
 
+// CheckDirectory is to check target directory
 func CheckDirectory(target string) {
 	// read directory
 	fis, err := ioutil.ReadDir(target)
@@ -41,7 +46,7 @@ func CheckDirectory(target string) {
 			if u.IsExistDir(fullPath + "/.git") {
 				//get latest commit id by git command
 				//out, err := exec.Command("git", "log", "-n", "1", "--pretty=format:\"%H\"").Output()
-				cmtId, _ := exec.Command("sh", "-c", fmt.Sprintf("cd %s; ", fullPath)+GIT_COMMAND_CMITID).Output()
+				cmtID, _ := exec.Command("sh", "-c", fmt.Sprintf("cd %s; ", fullPath)+GitCommandCmtID).Output()
 				if err != nil {
 					fmt.Println("git command failed")
 				}
@@ -50,7 +55,7 @@ func CheckDirectory(target string) {
 
 				//
 				dirName := strings.Replace(fullPath, os.Getenv("GOPATH"), "", 1)
-				cmdLines = append(cmdLines, CmdLines{DirName: dirName, CmtId: string(cmtId)})
+				cmdLines = append(cmdLines, CmdLines{DirName: dirName, CmtID: string(cmtID)})
 
 			} else {
 				//check more deep directory
@@ -67,7 +72,7 @@ func main() {
 
 	// targeted directory
 	if *targetDir == "" {
-		*targetDir = os.Getenv("GOPATH") + GO_GIT_DIR
+		*targetDir = os.Getenv("GOPATH") + GoGitDir
 	}
 	CheckDirectory(*targetDir)
 

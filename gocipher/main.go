@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	lg "github.com/hiromaily/golibs/log"
 	enc "github.com/hiromaily/golibs/cipher/encryption"
+	lg "github.com/hiromaily/golibs/log"
 	"os"
 )
 
@@ -21,13 +21,14 @@ e.g.:
   gcp -m d xxxxxxxx
 `
 
+// Params is parameter for template file
 type Params struct {
 	Name      string
 	Uppercase string
 }
 
 func init() {
-	lg.InitializeLog(lg.DEBUG_STATUS, lg.LOG_OFF_COUNT, 0, "[GOTOOLS GOTEST]", "/var/log/go/gotool.log")
+	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GOTEST]", "/var/log/go/gotool.log")
 
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))
@@ -40,29 +41,30 @@ func init() {
 	//	fmt.Printf("%d:%s\n", i, val)
 	//}
 
-	if len(os.Args) != 4{
+	if len(os.Args) != 4 {
 		flag.Usage()
 		os.Exit(1)
 		return
 	}
 }
 
-func setup(){
+func setup() {
 	size := 16
 	key := os.Getenv("ENC_KEY")
 	iv := os.Getenv("ENC_IV")
 
-	if key == "" || iv == ""{
-		fmt.Errorf("%s", "set Environment Valuable: ENC_KEY, ENC_IV")
+	if key == "" || iv == "" {
+		lg.Fatalf("%s", "set Environment Valuable: ENC_KEY, ENC_IV")
 		os.Exit(1)
 	}
 
 	enc.NewCrypt(size, key, iv)
 }
+
 func main() {
 	setup()
 
-	crypt := enc.GetCryptInstance()
+	crypt := enc.GetCrypt()
 	targetStr := os.Args[3]
 	fmt.Printf("target string is %s\n", targetStr)
 
@@ -74,6 +76,6 @@ func main() {
 		//decode
 		fmt.Println(crypt.DecryptBase64(targetStr))
 	default:
-		fmt.Errorf("%s", "arguments is wrong.")
+		lg.Fatalf("%s", "arguments is wrong")
 	}
 }
