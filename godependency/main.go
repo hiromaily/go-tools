@@ -84,8 +84,10 @@ func main() {
 		u.GoPanicWhenError(err)
 
 		result, err := tmpl.FileTempParser(tpl, cmdLines)
-		fmt.Println(result)
+		u.GoPanicWhenError(err)
 
+		//output
 		//TODO:ファイルに出力
+		fmt.Println(result)
 	}
 }

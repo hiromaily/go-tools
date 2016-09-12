@@ -1,4 +1,7 @@
 # gotools
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/hiromaily/gotools)](https://goreportcard.com/report/github.com/hiromaily/gotools)
+
 go tools
 
 # gotestfile
