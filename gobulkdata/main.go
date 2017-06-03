@@ -108,10 +108,17 @@ func init() {
 
 func makeData() {
 	var writer *bufio.Writer
+	var err error
 
-	fmt.Println(*fileName)
+	fmt.Printf("file path is [%s]\n", *fileName)
 
-	file, _ := os.OpenFile(*fileName, os.O_WRONLY, 0644)
+	file, err := os.Create(*fileName)
+	if err != nil {
+		lg.Error(err)
+	}
+	//file, _ := os.OpenFile(*fileName, os.O_WRONLY | os.O_APPEND, 0644)
+	defer file.Close()
+
 	writer = bufio.NewWriter(file)
 
 	for i := 1; i < *lineNum; i++ {
@@ -140,11 +147,26 @@ func makeData() {
 			testData.hiddenName,
 		}
 		fmt.Println(strings.Join(tmpData[:], ","))
-		writer.WriteString(strings.Join(tmpData[:], ",") + "\n")
+		//
+		_, err = writer.WriteString(strings.Join(tmpData[:], ",") + "\n")
+		if err != nil {
+			lg.Fatalf("[ERROR]WriteString: %v", err)
+			break
+		}
 	}
 
-	writer.Flush()
+	//fp, _ := os.OpenFile("/path/to/file", os.O_WRONLY | os.O_APPEND, 0644)
+	//defer fp.close()
+	//writer := bufio.NewWriter(fp)
+	//bw := bufio.NewWriter(writer)
+	//bw.WriteString("Hello world!")
+	//bw.Flush()
 
+	err = writer.Flush()
+	if err != nil {
+		//invalid argument
+		lg.Fatalf("[ERROR]Flush: %v", err)
+	}
 }
 
 func main() {
