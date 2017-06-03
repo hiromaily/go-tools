@@ -80,13 +80,4 @@ chat:
 	./clientmain
 
 srt:
-	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E01.srt -t 6.2
-	gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E02.srt -t 0.6
-	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E03.srt -t 1.0
-	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E04.srt -t 5.4
-	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E05.srt -t 1.3
-	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E06.srt -t 1.1
-	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E07.srt -t 1.3
-	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E08.srt -t 1.1
-	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E09.srt -t 1.1
-	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E10.srt -t 1.1
+	gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E01.srt -t 6.2

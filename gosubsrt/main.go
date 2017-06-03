@@ -29,12 +29,6 @@ e.g.:
   gosubsrt -f ./xxxxx.srt -t -1.5
 `
 
-// Params is parameter for template file
-type Params struct {
-	Name      string
-	Uppercase string
-}
-
 func readSrtFile() error {
 	//1.Read
 	fp, err := os.Open(*file)
