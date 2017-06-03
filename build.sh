@@ -71,6 +71,8 @@ go build -i -v -o ${GOPATH}/bin/godepen ./godependency/main.go
 
 go build -i -v -o ${GOPATH}/bin/gocipher ./gocipher/main.go
 
+go build -i -v -o ${GOPATH}/bin/gobulkdata ./gobulkdata/main.go
+
 ###########################################################
 # go run
 ###########################################################

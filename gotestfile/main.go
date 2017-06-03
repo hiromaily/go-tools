@@ -18,6 +18,9 @@ var (
 var usage = `Usage: %s [options...]
 Options:
   -n  Package name.
+e.g.:
+  gotestfile -n new_pkg_name
+   >> new_pgk_name_test.go
 `
 
 // Params is parameter for template file
@@ -27,7 +30,7 @@ type Params struct {
 }
 
 func init() {
-	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GOTEST]", "/var/log/go/gotool.log")
+	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GoTestFile]", "/var/log/go/gotool.log")
 
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))

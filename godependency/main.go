@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	lg "github.com/hiromaily/golibs/log"
 	"github.com/hiromaily/golibs/tmpl"
 	u "github.com/hiromaily/golibs/utils"
 	"io/ioutil"
@@ -13,19 +14,32 @@ import (
 	"text/template"
 )
 
-//GoGitDir is path for github.com directory
-const GoGitDir string = "/src/github.com/"
-
-//GitCommandCmtID is git command to get commit ID
-const GitCommandCmtID string = `git log -n 1 --pretty=format:"%H"`
-
-var cmdLines = []CmdLines{}
+const (
+	//GoGitDir is path for github.com directory
+	GoGitDir string = "/src/github.com/"
+	//GitCommandCmtID is git command to get commit ID
+	GitCommandCmtID string = `git log -n 1 --pretty=format:"%H"`
+)
 
 // CmdLines is parameter for template file
 type CmdLines struct {
 	DirName string
 	CmtID   string
 }
+
+var (
+	cmdLines  = []CmdLines{}
+	targetDir = flag.String("target", "", "target github.com directory path")
+	usage     = `Usage: %s [options...]
+Options:
+  -target  path of github.com directory
+e.g.:
+  godepen -target ${HOME}/work/go/src/github.com
+`
+)
+
+//cd ${GOPATH}/src/github.com/peterh/liner
+//git checkout b850cf8c6d0ee52309aad09ac610508c6c75e819
 
 // CheckDirectory is to check target directory
 func CheckDirectory(target string) {
@@ -66,10 +80,24 @@ func CheckDirectory(target string) {
 
 }
 
-func main() {
-	var targetDir = flag.String("target", "", "target github.com directory path")
+func init() {
+	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GoDependency]", "/var/log/go/gotool.log")
+
+	flag.Usage = func() {
+		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))
+	}
+
 	flag.Parse()
 
+	if *targetDir == "" {
+		flag.Usage()
+
+		os.Exit(1)
+		return
+	}
+}
+
+func main() {
 	// targeted directory
 	if *targetDir == "" {
 		*targetDir = os.Getenv("GOPATH") + GoGitDir

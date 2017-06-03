@@ -28,7 +28,7 @@ type Params struct {
 }
 
 func init() {
-	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GOTEST]", "/var/log/go/gotool.log")
+	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GoChipher]", "/var/log/go/gotool.log")
 
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))
@@ -74,7 +74,11 @@ func main() {
 		fmt.Println(crypt.EncryptBase64(targetStr))
 	case "d":
 		//decode
-		fmt.Println(crypt.DecryptBase64(targetStr))
+		str, err := crypt.DecryptBase64(targetStr)
+		if err != nil {
+			lg.Fatal(err)
+		}
+		fmt.Println(str)
 	default:
 		lg.Fatalf("%s", "arguments is wrong")
 	}
