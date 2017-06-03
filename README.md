@@ -5,7 +5,7 @@
 
 go tools
 
-# gotestfile
+#1. gotestfile
 Create template file of xxx_test.go
 
 ## Installation
@@ -25,7 +25,7 @@ e.g.
 ```
 
 
-# gocipher
+#2. gocipher
 Create encrypted string both (encode and decode)
 
 ## Installation
@@ -50,7 +50,7 @@ e.g.:
 ```
 
 
-# godependency [WIP]
+#3. godependency [WIP]
 Create shell script file listed current commit id form outer packages like github.com directory.  
 It has developed in progress yet.
 
@@ -68,7 +68,7 @@ e.g.:
 ```
 
 
-# gobulkdata [WIP]
+#4. gobulkdata [WIP]
 Create CSV test dummy data
 
 ## Installation
@@ -86,6 +86,6 @@ e.g.:
 ```
 
 
-# gochat [WIP]
+#5. gochat [WIP]
 chatting between client and server by TCP connection
 
