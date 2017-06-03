@@ -27,6 +27,12 @@ chk:
 ###############################################################################
 # Build
 ###############################################################################
+run:bld6 srt
+
+
+###############################################################################
+# Build
+###############################################################################
 bld1:
 	go build -i -v -o ${GOPATH}/bin/gotestfile ./gotestfile/main.go
 
@@ -42,6 +48,10 @@ bld4:
 bld5:
 	go build -i -v -o ${GOPATH}/bin/servermain ./gochat/server/server.go
 	go build -i -v -o ${GOPATH}/bin/clientmain ./gochat/client/client.go
+
+bld6:
+	go build -i -v -o ${GOPATH}/bin/gosubsrt ./gosubsrt/main.go
+
 
 bldall:bld1 bld2 bld3 bld4 bld5
 
@@ -69,3 +79,14 @@ chat:
 	./servermain &
 	./clientmain
 
+srt:
+	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E01.srt -t 6.2
+	gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E02.srt -t 0.6
+	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E03.srt -t 1.0
+	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E04.srt -t 5.4
+	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E05.srt -t 1.3
+	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E06.srt -t 1.1
+	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E07.srt -t 1.3
+	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E08.srt -t 1.1
+	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E09.srt -t 1.1
+	#gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E10.srt -t 1.1

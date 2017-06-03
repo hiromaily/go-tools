@@ -1,2 +1,9 @@
 .DS_Store
 .idea/
+
+gosubsrt/out/*
+gosubsrt/srtfiles/*
+!.gitkeep
+!gosubsrt/srtfiles/sample.srt
+
+
