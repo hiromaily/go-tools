@@ -155,13 +155,6 @@ func makeData() {
 		}
 	}
 
-	//fp, _ := os.OpenFile("/path/to/file", os.O_WRONLY | os.O_APPEND, 0644)
-	//defer fp.close()
-	//writer := bufio.NewWriter(fp)
-	//bw := bufio.NewWriter(writer)
-	//bw.WriteString("Hello world!")
-	//bw.Flush()
-
 	err = writer.Flush()
 	if err != nil {
 		//invalid argument
