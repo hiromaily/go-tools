@@ -33,6 +33,12 @@ Create encrypted string both (encode and decode)
 $ go get github.com/hiromaily/gotools/gocipher
 ```
 
+It requires below environment variable, e.g. 
+```
+export 'ENC_KEY=M#XF#R+gaKFvJ_<'
+export 'ENC_IV=@~wK-3OlQ<c2y@DA'
+```
+
 ## Usage
 ```
 Options:
