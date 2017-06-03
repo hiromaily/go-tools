@@ -5,27 +5,8 @@
 
 go tools
 
-#1. gotestfile
-Create template file of xxx_test.go
 
-## Installation
-```
-$ go get github.com/hiromaily/gotools/gotestfile
-```
-
-## Usage
-```
-Usage: gotestfile [options...]
-
-Options:
-  -n     package name
-
-e.g.
- $ gotestfile -n new-package-name
-```
-
-
-#2. gocipher
+# 1. gocipher
 Create encrypted string both (encode and decode)
 
 ## Installation
@@ -44,13 +25,144 @@ export 'ENC_IV=@~wK-3OlQ<c2y@DA'
 Options:
   -m  e:encode, d:decode.
 e.g.:
-  gcp -m e xxxxxxxx
+  gocipher -m e xxxxxxxx
     or
-  gcp -m d xxxxxxxx
+  gocipher -m d xxxxxxxx
+```
+
+## Example
+```
+$ gocipher -m e secret_string
+ => gtBl3kNqSAJGvJjnvUU9HQ==
+
+$ gocipher -m d gtBl3kNqSAJGvJjnvUU9HQ==
+ => secret_string
 ```
 
 
-#3. godependency [WIP]
+# 2. gotestfile
+Create template file of xxx_test.go
+
+## Installation
+```
+$ go get github.com/hiromaily/gotools/gotestfile
+```
+
+## Usage
+```
+Usage: gotestfile [options...]
+
+Options:
+  -n     package name
+
+e.g.
+ $ gotestfile -n new-package-name
+```
+
+## Example
+```
+$ gotestfile -n newpkg
+ => generate newpkg_test.go
+```
+```
+package newpkg_test
+
+import (
+	. "github.com/hiromaily/golibs/newpkg"
+	//lg "github.com/hiromaily/golibs/log"
+	tu "github.com/hiromaily/golibs/testutil"
+	"os"
+	"testing"
+)
+
+//-----------------------------------------------------------------------------
+// Test Framework
+//-----------------------------------------------------------------------------
+// Initialize
+func init() {
+	tu.InitializeTest("[Newpkg]")
+}
+
+func setup() {
+}
+
+func teardown() {
+}
+
+func TestMain(m *testing.M) {
+	setup()
+
+	code := m.Run()
+
+	teardown()
+
+	os.Exit(code)
+}
+
+//-----------------------------------------------------------------------------
+// function
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+// Test
+//-----------------------------------------------------------------------------
+func TestNewpkg(t *testing.T) {
+	//if err != nil {
+	//	t.Errorf("TestNewpkg error: %s", err)
+	//}
+}
+
+//-----------------------------------------------------------------------------
+// Benchmark
+//-----------------------------------------------------------------------------
+func BenchmarkNewpkg(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		//
+		//_ = CallSomething()
+		//
+	}
+	b.StopTimer()
+}
+```
+
+
+# 3. gosubsrt
+Tweaking time lag of srt files.
+
+
+## Installation
+```
+$ go get github.com/hiromaily/gotools/gosubsrt
+```
+
+## Usage
+```
+Options:
+  -f  path of srt file.
+  -t  time of tweaking duration.
+e.g.:
+  gosubsrt -f ./xxxxx.srt -t 1.5
+```
+
+## Example
+```
+prepare srt files somewhere
+$ gosubsrt -f ./gosubsrt/srtfiles/sample.srt -t 6.2
+
+[before]
+1
+00:00:10,950 --> 00:00:14,490
+Ah! Fuck. Yeah, it doesn't matter.
+
+[after]
+1
+00:00:17,150 --> 00:00:20,690
+Ah! Fuck. Yeah, it doesn't matter.
+```
+
+
+# 4. godependency [WIP]
 Create shell script file listed current commit id form outer packages like github.com directory.  
 It has developed in progress yet.
 
@@ -67,8 +179,19 @@ e.g.:
   $ godepen -target ${HOME}/work/go/src/github.com
 ```
 
+## Example
+```
+It shows latest checkout commit id from git directory for now
 
-#4. gobulkdata [WIP]
+cd ${GOPATH}/src/github.com/treasure-data/td-client-go
+git checkout 9cd8aa2ad7604fe42c622e83c753403754a5e729
+
+cd ${GOPATH}/src/github.com/tylerb/graceful
+git checkout d72b0151351a13d0421b763b88f791469c4f5dc7
+```
+
+
+# 5. gobulkdata [WIP]
 Create CSV test dummy data
 
 ## Installation
@@ -86,6 +209,6 @@ e.g.:
 ```
 
 
-#5. gochat [WIP]
+# 6. gochat [WIP]
 chatting between client and server by TCP connection
 
