@@ -54,6 +54,12 @@ func readSrtFile() error {
 	//fmt.Printf("mode: %s\n", fi.Mode())
 	//fmt.Printf("directory :%t\n", fi.IsDir())
 
+	//different pattern to file
+	//scanner := bufio.NewScanner(fp)
+	//for scanner.Scan() {
+	//	fmt.Println(scanner.Text())
+	//}
+
 	reader := bufio.NewReaderSize(fp, int(fi.Size()))
 
 	//2.Write
