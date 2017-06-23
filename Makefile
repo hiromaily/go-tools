@@ -52,8 +52,11 @@ bld5:
 bld6:
 	go build -i -v -o ${GOPATH}/bin/gosubsrt ./gosubsrt/main.go
 
+bld7:
+	go build -i -v -o ${GOPATH}/bin/gocookie ./gocookie/main.go
 
-bldall:bld1 bld2 bld3 bld4 bld5
+
+bldall:bld1 bld2 bld3 bld4 bld5 bld6 bld7
 
 
 ###############################################################################
@@ -81,3 +84,7 @@ chat:
 
 srt:
 	gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E01.srt -t 6.2
+
+cookie:
+	gocookie localhost:3000
+	gocookie gist.github.com
