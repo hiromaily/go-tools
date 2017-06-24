@@ -55,8 +55,10 @@ bld6:
 bld7:
 	go build -i -v -o ${GOPATH}/bin/gocookie ./gocookie/main.go
 
+bld8:
+	go build -i -v -o ${GOPATH}/bin/goapigen ./goapigen/main.go
 
-bldall:bld1 bld2 bld3 bld4 bld5 bld6 bld7
+bldall:bld1 bld2 bld3 bld4 bld5 bld6 bld7 bld8
 
 
 ###############################################################################
@@ -88,3 +90,6 @@ srt:
 cookie:
 	gocookie localhost
 	#gocookie gist.github.com
+
+apigen:
+	goapigen

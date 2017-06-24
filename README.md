@@ -222,3 +222,13 @@ retrieve cookie data by domain from chrome.
 e.g.:
   gocookie domain.com
 ```
+
+
+# 8. goapigen [WIP]
+API call for test
+
+## Usage
+```
+e.g.:
+  goapigen
+```
