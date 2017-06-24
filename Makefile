@@ -86,5 +86,5 @@ srt:
 	gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E01.srt -t 6.2
 
 cookie:
-	gocookie localhost:3000
-	gocookie gist.github.com
+	gocookie localhost
+	#gocookie gist.github.com
