@@ -6,7 +6,7 @@
 go tools
 
 
-# 1. gocipher [For Development Helper]
+# 1. gocipher [For Development]
 Create encrypted string both (encode and decode)
 
 ## Installation
@@ -40,7 +40,7 @@ $ gocipher -m d gtBl3kNqSAJGvJjnvUU9HQ==
 ```
 
 
-# 2. gocookie [For Development Helper]
+# 2. gocookie [For Development]
 Retrieve cookie data by domain from chrome.  
 (This is not my development.)
 
@@ -57,7 +57,7 @@ $ gocookie localhost
 ```
 
 
-# 3. goapitest [For Development Helper]
+# 3. goapitest [For Development]
 This is for API Test
 
 ## Usage
@@ -83,7 +83,7 @@ $ goapitest -m user
 ```
 
 
-# 4. gotestfile [For Golang Development Helper]
+# 4. gotestfile [For Golang Development]
 Create template file of xxx_test.go
 
 ## Installation
@@ -170,7 +170,7 @@ func BenchmarkNewpkg(b *testing.B) {
 ```
 
 
-# 5. gogentype [For Golang Development Helper]
+# 5. gogentype [For Golang Development]
 Create golang type struct from json data.
 However small modification is still required yet after generation.
 
@@ -195,19 +195,19 @@ Note:null value can not be detected proper type.
 $ gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "obj": {"child":100}}' => generate newpkg_test.go
  >>
 type TypeName struct {
-	Null	*string	    `json:"null"`
-	Int	    int	        `json:"int"`
-	Zero	int	        `json:"zero"`
-	Bool	bool	    `json:"bool"`
-	Obj	    map	        `json:"obj"`
-	Str	    string	    `json:"str"`
-	Slice	*string	    `json:"slice"`
-	Sliceempty	*string	`json:"sliceempty"`
+    Null        *string	    `json:"null"`
+    Int	        int	        `json:"int"`
+    Zero        int	        `json:"zero"`
+    Bool        bool        `json:"bool"`
+    Obj	        map	        `json:"obj"`
+    Str	        string      `json:"str"`
+    Slice       *string	    `json:"slice"`
+    Sliceempty  *string     `json:"sliceempty"`
 }
 ```
 
 
-# 6. gosubsrt
+# 6. gosubsrt [For Hobby]
 Tweaking time lag of srt files.
 
 
