@@ -6,7 +6,7 @@
 go tools
 
 
-# 1. gocipher
+# 1. gocipher [For Development Helper]
 Create encrypted string both (encode and decode)
 
 ## Installation
@@ -40,7 +40,50 @@ $ gocipher -m d gtBl3kNqSAJGvJjnvUU9HQ==
 ```
 
 
-# 2. gotestfile
+# 2. gocookie [For Development Helper]
+Retrieve cookie data by domain from chrome.  
+(This is not my development.)
+
+## Usage
+```
+e.g.:
+  gocookie domain.com
+```
+
+## Example
+```
+$ gocookie localhost
+ => localhost/key: value
+```
+
+
+# 3. goapitest [For Development Helper]
+This is for API Test
+
+## Usage
+```
+e.g.:
+  goapitest -m user
+```
+
+## Example
+```
+$ goapitest -m user
+ => 
+{
+  "success": true,
+  "records": [
+    {
+      "id": "xxxxxx",
+      "attr": null,
+      "name": "firstlast0013",
+    }
+  ]
+}
+```
+
+
+# 4. gotestfile [For Golang Development Helper]
 Create template file of xxx_test.go
 
 ## Installation
@@ -62,7 +105,7 @@ e.g.
 ## Example
 ```
 $ gotestfile -n newpkg
- => generate newpkg_test.go
+ => generate newpkg_test.go file
 ```
 ```
 package newpkg_test
@@ -127,7 +170,44 @@ func BenchmarkNewpkg(b *testing.B) {
 ```
 
 
-# 3. gosubsrt
+# 5. gogentype [For Golang Development Helper]
+Create golang type struct from json data.
+However small modification is still required yet after generation.
+
+## Installation
+```
+$ go get github.com/hiromaily/gotools/gogentype
+```
+
+## Usage
+```
+Usage: gogentype [options...]
+Options:
+  -json  Package name.
+e.g.:
+  gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "obj": {"child":100}}'
+
+Note:null value can not be detected proper type.
+```
+
+## Example
+```
+$ gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "obj": {"child":100}}' => generate newpkg_test.go
+ >>
+type TypeName struct {
+	Null	*string	    `json:"null"`
+	Int	    int	        `json:"int"`
+	Zero	int	        `json:"zero"`
+	Bool	bool	    `json:"bool"`
+	Obj	    map	        `json:"obj"`
+	Str	    string	    `json:"str"`
+	Slice	*string	    `json:"slice"`
+	Sliceempty	*string	`json:"sliceempty"`
+}
+```
+
+
+# 6. gosubsrt
 Tweaking time lag of srt files.
 
 
@@ -162,7 +242,7 @@ Ah! Fuck. Yeah, it doesn't matter.
 ```
 
 
-# 4. godependency [WIP]
+# 7. godependency [WIP]
 Create shell script file listed current commit id form outer packages like github.com directory.  
 It has developed in progress yet.
 
@@ -191,7 +271,7 @@ git checkout d72b0151351a13d0421b763b88f791469c4f5dc7
 ```
 
 
-# 5. gobulkdata [WIP]
+# 8. gobulkdata [WIP]
 Create CSV test dummy data
 
 ## Installation
@@ -209,26 +289,5 @@ e.g.:
 ```
 
 
-# 6. gochat [WIP]
+# 9. gochat [WIP]
 chatting between client and server by TCP connection
-
-
-# 7. gocookie
-retrieve cookie data by domain from chrome.  
-(This is not my development.)
-
-## Usage
-```
-e.g.:
-  gocookie domain.com
-```
-
-
-# 8. goapigen [WIP]
-API call for test
-
-## Usage
-```
-e.g.:
-  goapigen -m user
-```
