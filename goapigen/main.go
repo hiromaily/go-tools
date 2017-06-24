@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"flag"
 	"fmt"
 	ck "github.com/hiromaily/golibs/web/cookie"
@@ -73,8 +74,10 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		//TODO: format
-		fmt.Println(string(body))
+		//json format for readability
+		var out bytes.Buffer
+		json.Indent(&out, body, "", "  ")
+		fmt.Printf("%s\n", out.Bytes())
 	}
 }
 

@@ -230,5 +230,5 @@ API call for test
 ## Usage
 ```
 e.g.:
-  goapigen
+  goapigen -m user
 ```

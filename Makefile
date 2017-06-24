@@ -92,4 +92,4 @@ cookie:
 	#gocookie gist.github.com
 
 apigen:
-	goapigen
+	goapigen -m user
