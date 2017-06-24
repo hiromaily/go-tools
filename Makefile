@@ -56,7 +56,10 @@ bld7:
 	go build -i -v -o ${GOPATH}/bin/gocookie ./gocookie/main.go
 
 bld8:
-	go build -i -v -o ${GOPATH}/bin/goapigen ./goapigen/main.go
+	go build -i -v -o ${GOPATH}/bin/goapitest ./goapitest/main.go
+
+bld9:
+	go build -i -v -o ${GOPATH}/bin/gogentype ./gogentype/main.go
 
 bldall:bld1 bld2 bld3 bld4 bld5 bld6 bld7 bld8
 
@@ -91,5 +94,8 @@ cookie:
 	gocookie localhost
 	#gocookie gist.github.com
 
-apigen:
-	goapigen -m user
+apitest:
+	goapitest -m user
+
+gentype:
+	gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "obj": {"child":100}}'
