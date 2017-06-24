@@ -20,7 +20,6 @@ Options:
   -json  Package name.
 e.g.:
   gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "obj": {"child":100}}'
-   >>
 
 Note:null value can not be detected proper type.
 `
@@ -74,32 +73,4 @@ func main() {
 		fmt.Printf("\t%s\t%s\t`json:\"%s\"`\n", name, typeStr, key)
 	}
 	fmt.Println("}")
-
-	//type Role struct {
-	//	Id          string   `json:"id"`
-	//	Name        string   `json:"name"`
-	//	Type        string   `json:"type"`
-	//	Description *string  `json:"description"`
-	//	OwnerId     *string  `json:"ownerid"`
-	//	Attr        *string  `json:"attr"`
-	//	Abilities   []string `json:"abilities"`
-	//}
-
-	//key: name  value: newrole
-	//key: type  value: light
-	//key: ownerid  value: <nil>
-	//key: description  value: aaaaa
-	//key: id  value: xxxx
-	//key: abilities  value: []
-	//key: attr  value: <nil>
-
-	type TypeName struct {
-		Id          string  `json:"id"`
-		Abilities   *string `json:"abilities"`
-		Attr        *string `json:"attr"`
-		Name        string  `json:"name"`
-		Type        string  `json:"type"`
-		Ownerid     *string `json:"ownerid"`
-		Description string  `json:"description"`
-	}
 }
