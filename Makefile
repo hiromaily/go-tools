@@ -99,3 +99,6 @@ apitest:
 
 gentype:
 	gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "date": "2017-07-26T11:10:15+02:00", "obj": {"child":100}}'
+
+gentype2:
+	gogentype -file $(PWD)/gogentype/json/teachers.json

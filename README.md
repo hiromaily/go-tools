@@ -196,8 +196,8 @@ $ gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": n
 type TypeName1 struct {
     Str	        string      `json:"str"`
     Null        *string	    `json:"null"`
-    Int	        int	        `json:"int"`
-    Zero        int	        `json:"zero"`
+    Int	        int         `json:"int"`
+    Zero        int         `json:"zero"`
     Bool        bool        `json:"bool"`
     Date        *time.Time  `json:"date"`
     Slice       []string    `json:"slice"`

@@ -6,22 +6,25 @@ import (
 	lg "github.com/hiromaily/golibs/log"
 	u "github.com/hiromaily/golibs/utils"
 	tm "github.com/hiromaily/golibs/time"
-	//"io/ioutil"
 	"encoding/json"
 	"os"
 	"strings"
+	"io/ioutil"
+	"errors"
 )
 
 var (
 	jsonString = flag.String("json", "", "Json String Data")
+	file       = flag.String("file", "", "Json File Path")
 )
 
 var usage = `Usage: %s [options...]
 Options:
-  -json  Package name.
+  -json  Json String Data.
 e.g.:
   gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "date": "2017-07-26T11:10:15+02:00", "obj": {"child":100}}'
-
+ or
+  gogentype -file sample.json
 Note:null value can not be detected proper type.
 `
 
@@ -40,7 +43,7 @@ func init() {
 
 	flag.Parse()
 
-	if *jsonString == "" {
+	if *jsonString == "" && *file == "" {
 		flag.Usage()
 
 		os.Exit(1)
@@ -50,6 +53,15 @@ func init() {
 }
 
 func main() {
+	if *jsonString != ""{
+		handleJsonData()
+	}
+	if *file != ""{
+		handleJsonFile()
+	}
+}
+
+func handleJsonData(){
 	var unmarshaledJson map[string]interface{}
 
 	//1. json
@@ -63,6 +75,30 @@ func main() {
 	//2. handle response and output json
 	printType(unmarshaledJson, 1)
 }
+
+func handleJsonFile(){
+	var unmarshaledJson map[string]interface{}
+
+	//1. json load
+	jsonByte, err := loadJSONFile(*file)
+	if err != nil {
+		lg.Errorf("After calling loadJSONFile(): %v", err)
+		return
+	}
+
+	//2. json
+	err = json.Unmarshal(jsonByte, &unmarshaledJson)
+	if err != nil {
+		lg.Errorf("After calling json.Unmarshal(): %v", err)
+		return
+	}
+	//lg.Debug(unmarshaledJson)
+
+	//3. handle response and output json
+	printType(unmarshaledJson, 1)
+
+}
+
 
 func printType(jsonData map[string]interface{}, idx int){
 	var jsonMaps []map[string]interface{}
@@ -102,21 +138,17 @@ func printType(jsonData map[string]interface{}, idx int){
 	}
 }
 
-func isDateTime(){
-	//s := "2015/12/22 10:00:30"
-	//layout := "2006/01/02 15:04:05"
-	//t, err := time.Parse(layout, s)
-	//if err != nil {
-	//	panic(err)
-	//}
-}
+// LoadJSONFile is to read json file
+func loadJSONFile(filePath string) ([]byte, error) {
+	// Loading jsonfile
+	if filePath == "" {
+		err := errors.New("nothing JSON file")
+		return nil, err
+	}
 
-//func changeMapToJson(data map[string]interface{}) ([]byte, error){
-//	fmt.Println("data is", data)
-//	b, err := json.Marshal(data)
-//	if err != nil {
-//		return nil, fmt.Errorf("[ERROR] When calling `json.Marshal`: %v\n", err)
-//	}
-//
-//	return b, nil
-//}
+	file, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		return nil, err
+	}
+	return file, nil
+}
