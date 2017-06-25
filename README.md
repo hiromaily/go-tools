@@ -82,6 +82,11 @@ $ goapitest -m user
 }
 ```
 
+## Create New API Endpoint
+1. add model file in models/  
+   It's easier to define structure by `gogentype` in gotools with json raw data.
+2. add condition at main() in main.go. 
+
 
 # 4. gotestfile [For Golang Development]
 Create template file of xxx_test.go
