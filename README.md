@@ -172,7 +172,6 @@ func BenchmarkNewpkg(b *testing.B) {
 
 # 5. gogentype [For Golang Development]
 Create golang type struct from json data.
-However small modification is still required yet after generation.
 
 ## Installation
 ```
@@ -192,17 +191,21 @@ Note:null value can not be detected proper type.
 
 ## Example
 ```
-$ gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "obj": {"child":100}}' => generate newpkg_test.go
+$ gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "date": "2017-07-26T11:10:15+02:00", "obj": {"child":100}}' => generate newpkg_test.go
  >>
-type TypeName struct {
+type TypeName1 struct {
+    Str	        string      `json:"str"`
     Null        *string	    `json:"null"`
     Int	        int	        `json:"int"`
     Zero        int	        `json:"zero"`
     Bool        bool        `json:"bool"`
-    Obj	        map	        `json:"obj"`
-    Str	        string      `json:"str"`
-    Slice       *string	    `json:"slice"`
-    Sliceempty  *string     `json:"sliceempty"`
+    Date        *time.Time  `json:"date"`
+    Slice       []string    `json:"slice"`
+    Sliceempty  []string    `json:"sliceempty"`
+    Obj	        TypeName2   `json:"obj"`
+}
+type TypeName2 struct {
+    Child       int         `json:"child"`
 }
 ```
 
