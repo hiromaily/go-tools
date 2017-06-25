@@ -1,16 +1,16 @@
 package main
 
 import (
+	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	lg "github.com/hiromaily/golibs/log"
-	u "github.com/hiromaily/golibs/utils"
 	tm "github.com/hiromaily/golibs/time"
-	"encoding/json"
+	u "github.com/hiromaily/golibs/utils"
+	"io/ioutil"
 	"os"
 	"strings"
-	"io/ioutil"
-	"errors"
 )
 
 var (
@@ -54,15 +54,15 @@ func init() {
 }
 
 func main() {
-	if *jsonString != ""{
+	if *jsonString != "" {
 		handleJsonData()
 	}
-	if *file != ""{
+	if *file != "" {
 		handleJsonFile()
 	}
 }
 
-func handleJsonData(){
+func handleJsonData() {
 	var unmarshaledJson map[string]interface{}
 
 	//1. json
@@ -77,7 +77,7 @@ func handleJsonData(){
 	printType(unmarshaledJson, 1)
 }
 
-func handleJsonFile(){
+func handleJsonFile() {
 	var unmarshaledJson map[string]interface{}
 
 	//1. json load
@@ -100,34 +100,27 @@ func handleJsonFile(){
 
 }
 
-
-func printType(jsonData map[string]interface{}, idx int){
+func printType(jsonData map[string]interface{}, idx int) {
 	var jsonMaps []map[string]interface{}
 
 	fmt.Printf("type %s%d struct {\n", "TypeName", idx)
 	for key, value := range jsonData {
 		//lg.Debug("key:", key, " value:", value)
 		name := strings.Title(key)
+
 		typeStr := u.CheckInterfaceByIf(value)
-		if typeStr == "" {
-			typeStr = "*string"
-		} else if typeStr == "string"{
-			//Check if it's date. e.g. 2017-07-26T11:10:15+02:00
-			ret := tm.CheckParseTime(u.Itos(value))
-			if len(ret) > 0{
-				typeStr = "*time.Time"
-			}
-		} else if typeStr == "slice"{
+		typeStr = typeConvert(typeStr, value)
+
+		if typeStr == "slice" {
 			//check value
 			typeStr, value = handleSliceValue(value)
-			if typeStr == "[]map"{
+			if typeStr == "[]map" {
 				typeStr, jsonMaps = handleMapValue(value, jsonMaps, idx)
 			}
-		} else if typeStr == "float64" {
-			typeStr = "int"
 		} else if typeStr == "map" {
 			typeStr, jsonMaps = handleMapValue(value, jsonMaps, idx)
 		}
+
 		fmt.Printf("\t%s\t%s\t`json:\"%s\"`\n", name, typeStr, key)
 	}
 	fmt.Println("}")
@@ -138,25 +131,42 @@ func printType(jsonData map[string]interface{}, idx int){
 	}
 }
 
-func handleSliceValue(value interface{}) (string, interface{}){
+func typeConvert(typeStr string, value interface{}) string {
+	if typeStr == "" {
+		typeStr = "*string"
+	} else if typeStr == "string" {
+		//Check if it's date. e.g. 2017-07-26T11:10:15+02:00
+		ret := tm.CheckParseTime(u.Itos(value))
+		if len(ret) > 0 {
+			typeStr = "*time.Time"
+		}
+	} else if typeStr == "float64" {
+		typeStr = "int"
+	}
+	return typeStr
+}
+
+func handleSliceValue(value interface{}) (string, interface{}) {
 	sliceIfc := u.ItoSI(value)
-	if sliceIfc != nil && len(sliceIfc) > 0{
+	if sliceIfc != nil && len(sliceIfc) > 0 {
 		//check type
 		typeStr := u.CheckInterfaceByIf(sliceIfc[0])
+		typeStr = typeConvert(typeStr, sliceIfc[0])
+
 		return fmt.Sprintf("[]%s", typeStr), sliceIfc[0]
 	}
 	//In nil value, return string for now.
 	return "[]string", nil
 }
 
-func handleMapValue(value interface{}, jsonMaps []map[string]interface{}, idx int) (string, []map[string]interface{}){
+func handleMapValue(value interface{}, jsonMaps []map[string]interface{}, idx int) (string, []map[string]interface{}) {
 	var typeStr string
 	//change interface{} to []map[string]interface{}
 	mi := u.ItoMsif(value)
-	if mi != nil{
+	if mi != nil {
 		jsonMaps = append(jsonMaps, mi)
 		typeStr = fmt.Sprintf("TypeName%d", idx+1)
-	}else{
+	} else {
 		typeStr = "map"
 	}
 	return typeStr, jsonMaps

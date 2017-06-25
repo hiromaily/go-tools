@@ -213,9 +213,9 @@ type TypeName2 struct {
 ```
 [sample.json]
 {
-  "url": "http://eikaiwa.dmm.com/",
+  "url": "http://example.com/",
   "teachers": [
-    { "id": 123, "name": "techer aaa", "country": "Japan"},
+    { "id": 123, "name": "teacher aaa", "country": "Japan"},
     { "id": 124, "name": "teacher bbb", "country": "Netherlands"},
   ]
 }
