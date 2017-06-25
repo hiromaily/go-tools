@@ -185,6 +185,8 @@ Options:
   -json  Package name.
 e.g.:
   gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "obj": {"child":100}}'
+ or
+  gogentype -file sample.json
 
 Note:null value can not be detected proper type.
 ```
@@ -206,6 +208,28 @@ type TypeName1 struct {
 }
 type TypeName2 struct {
     Child       int         `json:"child"`
+}
+```
+```
+[sample.json]
+{
+  "url": "http://eikaiwa.dmm.com/",
+  "teachers": [
+    { "id": 123, "name": "techer aaa", "country": "Japan"},
+    { "id": 124, "name": "teacher bbb", "country": "Netherlands"},
+  ]
+}
+
+$ gogentype -file sample.json
+ >>
+type TypeName1 struct {
+    Url       string     `json:"url"`
+    Teachers  TypeName2  `json:"teachers"`
+}
+type TypeName2 struct {
+    Id       int    `json:"id"`
+    Name     string `json:"name"`
+    Country  string `json:"country"`
 }
 ```
 

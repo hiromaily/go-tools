@@ -25,6 +25,7 @@ e.g.:
   gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "date": "2017-07-26T11:10:15+02:00", "obj": {"child":100}}'
  or
   gogentype -file sample.json
+
 Note:null value can not be detected proper type.
 `
 
@@ -117,16 +118,15 @@ func printType(jsonData map[string]interface{}, idx int){
 				typeStr = "*time.Time"
 			}
 		} else if typeStr == "slice"{
-			typeStr = "[]string"
+			//check value
+			typeStr, value = handleSliceValue(value)
+			if typeStr == "[]map"{
+				typeStr, jsonMaps = handleMapValue(value, jsonMaps, idx)
+			}
 		} else if typeStr == "float64" {
 			typeStr = "int"
 		} else if typeStr == "map" {
-			//change interface{} to []map[string]interface{}
-			mi := u.ItoMsif(value)
-			if mi != nil{
-				jsonMaps = append(jsonMaps, mi)
-				typeStr = fmt.Sprintf("TypeName%d", idx+1)
-			}
+			typeStr, jsonMaps = handleMapValue(value, jsonMaps, idx)
 		}
 		fmt.Printf("\t%s\t%s\t`json:\"%s\"`\n", name, typeStr, key)
 	}
@@ -136,6 +136,30 @@ func printType(jsonData map[string]interface{}, idx int){
 	for i, v := range jsonMaps {
 		printType(v, idx+i+1)
 	}
+}
+
+func handleSliceValue(value interface{}) (string, interface{}){
+	sliceIfc := u.ItoSI(value)
+	if sliceIfc != nil && len(sliceIfc) > 0{
+		//check type
+		typeStr := u.CheckInterfaceByIf(sliceIfc[0])
+		return fmt.Sprintf("[]%s", typeStr), sliceIfc[0]
+	}
+	//In nil value, return string for now.
+	return "[]string", nil
+}
+
+func handleMapValue(value interface{}, jsonMaps []map[string]interface{}, idx int) (string, []map[string]interface{}){
+	var typeStr string
+	//change interface{} to []map[string]interface{}
+	mi := u.ItoMsif(value)
+	if mi != nil{
+		jsonMaps = append(jsonMaps, mi)
+		typeStr = fmt.Sprintf("TypeName%d", idx+1)
+	}else{
+		typeStr = "map"
+	}
+	return typeStr, jsonMaps
 }
 
 // LoadJSONFile is to read json file
