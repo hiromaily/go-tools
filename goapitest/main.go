@@ -57,7 +57,7 @@ func main() {
 	case "user":
 		data, url, err = models.CreateUser()
 	case "role":
-		data, url, err = models.CreateRole("light")
+		data, url, err = models.CreateRole()
 	default:
 		err = fmt.Errorf("[ERROR] API arguments is invalid.")
 		flag.Usage()

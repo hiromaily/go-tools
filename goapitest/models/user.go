@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"github.com/satori/go.uuid"
+	u "github.com/hiromaily/golibs/utils"
 	"time"
 )
 
@@ -48,14 +49,17 @@ func CreateUser() ([]byte, string, error) {
 	d.FirstName = fmt.Sprintf("%s%s", firstNameBase, incrementStr)
 	d.LastName = fmt.Sprintf("%s%s", lastNameBase, incrementStr)
 
-	d.Password = "H2&t3#I1" //TODO:is it possible to send simple password to server directry??
+	d.Password = "H2&t3#I1" //TODO:is it possible to send simple password to server directry?? => No!
 	d.PasswordLastChanged = nil
 	d.PasswordExpiration = nil
 	d.PasswordExpired = false
 	d.SendPasswordEmail = false
 	d.Email = fmt.Sprintf("%s@api.test", d.Name)
 	d.Gender = "Male"
-	d.Type = "full"
+
+	roles := []string{"light", "full"}
+	d.Type = u.PickOneFromEnum(roles)
+
 	d.Enabled = true
 	d.DashboardId = nil
 	d.Comments = nil

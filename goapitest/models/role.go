@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"github.com/satori/go.uuid"
+	u "github.com/hiromaily/golibs/utils"
 )
 
 type Role struct {
@@ -15,7 +16,7 @@ type Role struct {
 	Abilities   []string `json:"abilities"`
 }
 
-func CreateRole(role string) ([]byte, string, error) {
+func CreateRole() ([]byte, string, error) {
 	var url = "http://localhost:3000/api/data/Role"
 
 	d := Role{}
@@ -27,11 +28,8 @@ func CreateRole(role string) ([]byte, string, error) {
 	}
 	d.Name = fmt.Sprintf("Role%s", incrementStr)
 
-	if role != "" {
-		d.Type = role
-	} else {
-		d.Type = "full"
-	}
+	roles := []string{"light", "full"}
+	d.Type = u.PickOneFromEnum(roles)
 
 	d.Description = nil
 	d.OwnerId = nil
