@@ -57,7 +57,26 @@ $ gocookie localhost
 ```
 
 
-# 3. goapitest [For Development]
+# 3. gogentlscert [For Development]
+Generate TLS certificate files using golang package.  
+()
+
+## Usage
+```
+e.g.:
+  sudo gogenkey --host hy
+```
+
+## Example
+```
+$ sudo gogenkey --host hy
+ => 
+2017/06/28 21:06:43 written cert.pem
+2017/06/28 21:06:43 written key.pem
+```
+
+
+# 4. goapitest [For Development]
 This is for API Test
 
 ## Usage
@@ -88,7 +107,7 @@ $ goapitest -m user
 2. add condition at main() in main.go. 
 
 
-# 4. gotestfile [For Golang Development]
+# 5. gotestfile [For Golang Development]
 Create template file of xxx_test.go
 
 ## Installation
@@ -175,7 +194,7 @@ func BenchmarkNewpkg(b *testing.B) {
 ```
 
 
-# 5. gogentype [For Golang Development]
+# 6. gogentype [For Golang Development]
 Create golang type struct from json data.
 
 ## Installation
@@ -239,7 +258,7 @@ type TypeName2 struct {
 ```
 
 
-# 6. gosubsrt [For Hobby]
+# 7. gosubsrt [For Hobby]
 Tweaking time lag of srt files.
 
 
@@ -274,7 +293,7 @@ Ah! Fuck. Yeah, it doesn't matter.
 ```
 
 
-# 7. godependency [WIP]
+# 8. godependency [WIP]
 Create shell script file listed current commit id form outer packages like github.com directory.  
 It has developed in progress yet.
 
@@ -303,7 +322,7 @@ git checkout d72b0151351a13d0421b763b88f791469c4f5dc7
 ```
 
 
-# 8. gobulkdata [WIP]
+# 9. gobulkdata [WIP]
 Create CSV test dummy data
 
 ## Installation
@@ -321,5 +340,5 @@ e.g.:
 ```
 
 
-# 9. gochat [WIP]
+# 10. gochat [WIP]
 chatting between client and server by TCP connection
