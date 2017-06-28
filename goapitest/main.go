@@ -14,6 +14,7 @@ import (
 
 var (
 	API       = flag.String("m", "", "API Name")
+	reset     = flag.Int("r", 0, "Reset increment file")
 	domain    = "localhost"
 	cookieKey = "gearbox"
 )
@@ -21,6 +22,7 @@ var (
 var usage = `Usage: %s [options...]
 Options:
   -m  API Name.
+  -r  Reset increment file.
 Models:
   user: user api
   role: role api
@@ -41,6 +43,10 @@ func init() {
 
 		os.Exit(1)
 		return
+	}
+
+	if *reset == 1 {
+		models.ResetIncrement()
 	}
 }
 

@@ -35,6 +35,11 @@ func getIncrement() (string, error) {
 	return fmt.Sprintf("%04d", i), nil
 }
 
+func ResetIncrement(){
+	filePath := os.Getenv("GOPATH") + "/src/github.com/hiromaily/gotools/goapitest/inclement"
+	ioutil.WriteFile(filePath, []byte("0"), 0644)
+}
+
 func convertJson(model interface{}) ([]byte, error) {
 	data, err := json.Marshal(model)
 	if err != nil {
