@@ -61,6 +61,9 @@ bld8:
 bld9:
 	go build -i -v -o ${GOPATH}/bin/gogentype ./gogentype/main.go
 
+bld10:
+	go build -i -v -o ${GOPATH}/bin/gogenkey ./gogentlscert/main.go
+
 bldall:bld1 bld2 bld3 bld4 bld5 bld6 bld7 bld8
 
 
@@ -96,10 +99,13 @@ cookie:
 
 apitest:
 	goapitest -m user
-    goapitest -m role -r 1
+	goapitest -m role -r 1
 
 gentype:
 	gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "date": "2017-07-26T11:10:15+02:00", "obj": {"child":100}}'
 
 gentype2:
 	gogentype -file $(PWD)/gogentype/json/teachers.json
+
+gentls:
+	sudo gogenkey --host hy
