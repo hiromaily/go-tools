@@ -64,7 +64,7 @@ bld9:
 bld10:
 	go build -i -v -o ${GOPATH}/bin/gogenkey ./gogentlscert/main.go
 
-bldall:bld1 bld2 bld3 bld4 bld5 bld6 bld7 bld8
+bldall:bld1 bld2 bld3 bld4 bld5 bld6 bld7 bld8 bld9 bld10
 
 
 ###############################################################################
