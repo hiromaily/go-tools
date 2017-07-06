@@ -2,8 +2,8 @@ package models
 
 import (
 	"fmt"
-	"github.com/satori/go.uuid"
 	u "github.com/hiromaily/golibs/utils"
+	"github.com/satori/go.uuid"
 	"time"
 )
 
@@ -66,7 +66,9 @@ func CreateUser() ([]byte, string, error) {
 	d.Attr = nil
 	d.Departments = []string{}
 	d.Teams = []string{}
-	d.Roles = []string{"55a6e956-2d61-4a68-91e0-d51b194dd700"}
+	if d.Type == "full" {
+		d.Roles = []string{"55a6e956-2d61-4a68-91e0-d51b194dd700"}
+	}
 
 	//to json
 	data, err := convertJson(&d)

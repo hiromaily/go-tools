@@ -2,8 +2,8 @@ package models
 
 import (
 	"fmt"
-	"github.com/satori/go.uuid"
 	u "github.com/hiromaily/golibs/utils"
+	"github.com/satori/go.uuid"
 )
 
 type Role struct {
