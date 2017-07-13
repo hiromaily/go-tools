@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	lg "github.com/hiromaily/golibs/log"
 	ck "github.com/hiromaily/golibs/web/cookie"
 	"github.com/hiromaily/gotools/goapitest/models"
 	"io/ioutil"
@@ -48,6 +49,8 @@ func init() {
 	if *reset == 1 {
 		models.ResetIncrement()
 	}
+
+	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GoApiTest]", "/var/log/go/gotool.log")
 }
 
 func main() {
@@ -102,6 +105,11 @@ func sendPost(data []byte, url string) ([]byte, error) {
 
 	//2. get cookie
 	cookie := ck.GetValue(domain, cookieKey)
+	if cookie == "" {
+		return nil, fmt.Errorf("[ERROR] Cookie could not be found.")
+	} else {
+		lg.Debug("cookie:%s", cookie)
+	}
 
 	//3. set http header
 	// Content-Type:application/json; charset=utf-8
