@@ -4,6 +4,7 @@ import (
 	"fmt"
 	u "github.com/hiromaily/golibs/utils"
 	"github.com/satori/go.uuid"
+	"github.com/icrowley/fake"
 	"time"
 )
 
@@ -46,10 +47,14 @@ func CreateUser() ([]byte, string, error) {
 	}
 
 	d.Name = fmt.Sprintf("%s-%s%s", firstNameBase, lastNameBase, incrementStr)
-	d.FirstName = fmt.Sprintf("%s%s", firstNameBase, incrementStr)
-	d.LastName = fmt.Sprintf("%s%s", lastNameBase, incrementStr)
+	//d.FirstName = fmt.Sprintf("%s%s", firstNameBase, incrementStr)
+	//d.LastName = fmt.Sprintf("%s%s", lastNameBase, incrementStr)
+	d.FirstName = fake.FirstName()
+	d.LastName = fake.LastName()
 
 	d.Password = "H2&t3#I1" //TODO:is it possible to send simple password to server directry?? => No!
+	//d.Password = fake.SimplePassword()
+
 	d.PasswordLastChanged = nil
 	d.PasswordExpiration = nil
 	d.PasswordExpired = false
