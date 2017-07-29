@@ -1,6 +1,8 @@
 # gotools
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/hiromaily/gotools)](https://goreportcard.com/report/github.com/hiromaily/gotools)
+[![codebeat badge](https://codebeat.co/badges/4e4e3273-f177-4b4a-812d-b902c01d8b3d)](https://codebeat.co/projects/github-com-hiromaily-go-tools-master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6b57918b3861422b8d67add70fe0bb59)](https://www.codacy.com/app/hiromaily2/go-tools?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hiromaily/go-tools&amp;utm_campaign=Badge_Grade)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://raw.githubusercontent.com/hiromaily/gotools/master/LICENSE)
 
 go tools
