@@ -34,35 +34,35 @@ run:bld6 srt
 # Build
 ###############################################################################
 bld1:
-	go build -i -v -o ${GOPATH}/bin/gotestfile ./gotestfile/main.go
+	go build -i -race -v -o ${GOPATH}/bin/gotestfile ./gotestfile/main.go
 
 bld2:
-	go build -i -v -o ${GOPATH}/bin/gocipher ./gocipher/main.go
+	go build -i -race -v -o ${GOPATH}/bin/gocipher ./gocipher/main.go
 
 bld3:
-	go build -i -v -o ${GOPATH}/bin/godepen ./godependency/main.go
+	go build -i -race -v -o ${GOPATH}/bin/godepen ./godependency/main.go
 
 bld4:
-	go build -i -v -o ${GOPATH}/bin/gobulkdata ./gobulkdata/main.go
+	go build -i -race -v -o ${GOPATH}/bin/gobulkdata ./gobulkdata/main.go
 
 bld5:
-	go build -i -v -o ${GOPATH}/bin/servermain ./gochat/server/server.go
-	go build -i -v -o ${GOPATH}/bin/clientmain ./gochat/client/client.go
+	go build -i -race -v -o ${GOPATH}/bin/servermain ./gochat/server/server.go
+	go build -i -race -v -o ${GOPATH}/bin/clientmain ./gochat/client/client.go
 
 bld6:
-	go build -i -v -o ${GOPATH}/bin/gosubsrt ./gosubsrt/main.go
+	go build -i -race -v -o ${GOPATH}/bin/gosubsrt ./gosubsrt/main.go
 
 bld7:
-	go build -i -v -o ${GOPATH}/bin/gocookie ./gocookie/main.go
+	go build -i -race -v -o ${GOPATH}/bin/gocookie ./gocookie/main.go
 
 bld8:
-	go build -i -v -o ${GOPATH}/bin/goapitest ./goapitest/main.go
+	go build -i -race -v -o ${GOPATH}/bin/goapitest ./goapitest/main.go
 
 bld9:
-	go build -i -v -o ${GOPATH}/bin/gogentype ./gogentype/main.go
+	go build -i -race -v -o ${GOPATH}/bin/gogentype ./gogentype/main.go
 
 bld10:
-	go build -i -v -o ${GOPATH}/bin/gogenkey ./gogentlscert/main.go
+	go build -i -race -v -o ${GOPATH}/bin/gogenkey ./gogentlscert/main.go
 
 bldall:bld1 bld2 bld3 bld4 bld5 bld6 bld7 bld8 bld9 bld10
 
