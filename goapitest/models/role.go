@@ -20,11 +20,15 @@ func CreateRole() ([]byte, string, error) {
 	var url = "http://localhost:3000/api/data/Role"
 
 	d := Role{}
-	d.Id = uuid.NewV4().String()
+	ui, err := uuid.NewV4()
+	if err != nil {
+		return nil, "", err
+	}
+	d.Id = ui.String()
 
 	incrementStr, err := getIncrement()
 	if err != nil {
-		fmt.Println(err)
+		return nil, "", err
 	}
 	d.Name = fmt.Sprintf("Role%s", incrementStr)
 

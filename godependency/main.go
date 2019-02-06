@@ -81,7 +81,7 @@ func CheckDirectory(target string) {
 }
 
 func init() {
-	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GoDependency]", "/var/log/go/gotool.log")
+	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GoDependency]", "", "hiromaily")
 
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))

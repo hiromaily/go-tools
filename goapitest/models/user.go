@@ -3,8 +3,8 @@ package models
 import (
 	"fmt"
 	u "github.com/hiromaily/golibs/utils"
-	"github.com/satori/go.uuid"
 	"github.com/icrowley/fake"
+	"github.com/satori/go.uuid"
 	"time"
 )
 
@@ -39,7 +39,11 @@ func CreateUser() ([]byte, string, error) {
 	var url = "http://localhost:3000/api/data/User"
 
 	d := User{}
-	d.Id = uuid.NewV4().String()
+	ui, err := uuid.NewV4()
+	if err != nil {
+		return nil, "", err
+	}
+	d.Id = ui.String()
 
 	incrementStr, err := getIncrement()
 	if err != nil {

@@ -50,7 +50,7 @@ func init() {
 		models.ResetIncrement()
 	}
 
-	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GoApiTest]", "/var/log/go/gotool.log")
+	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GoApiTest]", "", "hiromaily")
 }
 
 func main() {
@@ -104,8 +104,10 @@ func sendPost(data []byte, url string) ([]byte, error) {
 	}
 
 	//2. get cookie
-	cookie := ck.GetValue(domain, cookieKey)
-	if cookie == "" {
+	cookie, err := ck.GetValue(domain, cookieKey)
+	if err != nil {
+		return nil, err
+	} else if cookie == "" {
 		return nil, fmt.Errorf("[ERROR] Cookie could not be found.")
 	} else {
 		lg.Debug("cookie:%s", cookie)

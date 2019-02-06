@@ -30,7 +30,7 @@ type Params struct {
 }
 
 func init() {
-	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GoTestFile]", "/var/log/go/gotool.log")
+	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GoTestFile]", "", "hiromaily")
 
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))

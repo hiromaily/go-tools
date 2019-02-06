@@ -63,7 +63,7 @@ e.g.:
 //2503,,,,,,,,,,Newsletter,Artist c,2016-06-15 13:18:43,2016-06-15 13:19:13,Windows,Desktop,unknown,Chrome,92.111.79.210,gogo3@gmail.com,,test name
 
 func init() {
-	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GOTEST]", "/var/log/go/gotool.log")
+	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GOTEST]", "", "hiromaily")
 
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))

@@ -28,7 +28,7 @@ type Params struct {
 }
 
 func init() {
-	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99, "[GOTOOLS GoChipher]", "/var/log/go/gotool.log")
+	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GoChipher]", "", "hiromaily")
 
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))
@@ -49,7 +49,6 @@ func init() {
 }
 
 func setup() {
-	size := 16
 	key := os.Getenv("ENC_KEY")
 	iv := os.Getenv("ENC_IV")
 
@@ -58,7 +57,7 @@ func setup() {
 		os.Exit(1)
 	}
 
-	enc.NewCrypt(size, key, iv)
+	enc.NewCrypt(key, iv)
 }
 
 func main() {
