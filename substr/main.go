@@ -4,14 +4,15 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	lg "github.com/hiromaily/golibs/log"
-	tim "github.com/hiromaily/golibs/time"
-	u "github.com/hiromaily/golibs/utils"
 	"io"
 	"math"
 	"os"
 	"strings"
 	"time"
+
+	lg "github.com/hiromaily/golibs/log"
+	tim "github.com/hiromaily/golibs/time"
+	u "github.com/hiromaily/golibs/utils"
 )
 
 var (
@@ -26,7 +27,7 @@ Options:
   -f  path of srt file.
   -t  time of tweaking duration.
 e.g.:
-  gosubsrt -f ./xxxxx.srt -t -1.5
+  subsrt -f ./xxxxx.srt -t -1.5
 `
 
 func readSrtFile() error {
@@ -141,12 +142,9 @@ func copyFile() error {
 }
 
 func init() {
-	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GoTestFile]", "", "hiromaily")
-
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))
 	}
-
 	flag.Parse()
 
 	if *file == "" || *tweakTime == 0.0 {
@@ -158,7 +156,9 @@ func init() {
 }
 
 func main() {
-	fmt.Println(file, tweakTime)
+	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GoSubStr]", "", "hiromaily")
+
+	lg.Info(file, tweakTime)
 	err := readSrtFile()
 	if err != nil {
 		panic(err)

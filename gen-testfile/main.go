@@ -3,23 +3,24 @@ package main
 import (
 	"flag"
 	"fmt"
-	lg "github.com/hiromaily/golibs/log"
-	"github.com/hiromaily/golibs/tmpl"
 	"io/ioutil"
 	"os"
 	"strings"
 	"text/template"
+
+	lg "github.com/hiromaily/golibs/log"
+	"github.com/hiromaily/golibs/tmpl"
 )
 
 var (
-	name = flag.String("n", "", "Packagename")
+	name = flag.String("n", "", "package name")
 )
 
 var usage = `Usage: %s [options...]
 Options:
-  -n  Package name.
+  -n  package name.
 e.g.:
-  gotestfile -n new_pkg_name
+  gen-testfile -n new_pkg_name
    >> new_pgk_name_test.go
 `
 
@@ -30,17 +31,13 @@ type Params struct {
 }
 
 func init() {
-	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GoTestFile]", "", "hiromaily")
-
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))
 	}
-
 	flag.Parse()
 
 	if *name == "" {
 		flag.Usage()
-
 		os.Exit(1)
 		return
 	}
@@ -62,7 +59,7 @@ func uppercase(str string) string {
 
 func readTemplate() string {
 	goPath := os.Getenv("GOPATH")
-	tpl, err := template.ParseFiles(goPath + "/src/github.com/hiromaily/gotools/gotestfile/templates/base.tpl")
+	tpl, err := template.ParseFiles(goPath + "/src/github.com/hiromaily/gotools/go-testfile/templates/base.tpl")
 	if err != nil {
 		lg.Fatalf("parse error 1: %s", "templates/base.tpl")
 	}
@@ -78,11 +75,12 @@ func readTemplate() string {
 }
 
 func outFile(data string) {
-	//ioutil.WriteFile(fmt.Sprintf("./%s_test.go", *name), []byte(data), os.FileMode(0644))
 	ioutil.WriteFile(fmt.Sprintf("./%s_test.go", *name), []byte(data), 0644)
 }
 
 func main() {
+	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GoTestFile]", "", "hiromaily")
+
 	result := readTemplate()
 
 	//output as file

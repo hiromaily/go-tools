@@ -1,111 +1,120 @@
 # Note: tabs by space can't not used for Makefile!
+
 MONGO_PORT=27017
+CURRENTDIR=`pwd`
 
 
 ###############################################################################
-# Golang detection and formatter
+# Managing Dependencies
 ###############################################################################
-fmt:
-	go fmt `go list ./... | grep -v '/vendor/'`
+.PHONY: update
+update:
+	GO111MODULE=off go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
+	go get -u -d -v ./...
 
-vet:
-	go vet `go list ./... | grep -v '/vendor/'`
 
+###############################################################################
+# Golang formatter and detection
+###############################################################################
+.PHONY: lint
 lint:
-	golint ./... | grep -v '^vendor\/' || true
-	misspell `find . -name "*.go" | grep -v '/vendor/'`
-	ineffassign .
+	golangci-lint run --fix
 
-chk:
-	go fmt `go list ./... | grep -v '/vendor/'`
-	go vet `go list ./... | grep -v '/vendor/'`
-	golint ./... | grep -v '^vendor\/' || true
-	misspell `find . -name "*.go" | grep -v '/vendor/'`
-	ineffassign .
+.PHONY: imports
+imports:
+	./scripts/imports.sh
 
 
 ###############################################################################
-# Build
+# cookie
+#  show domain cookie
 ###############################################################################
-run:bld6 srt
-
-
-###############################################################################
-# Build
-###############################################################################
-bld1:
-	go build -i -race -v -o ${GOPATH}/bin/gotestfile ./gotestfile/main.go
-
-bld2:
-	go build -i -race -v -o ${GOPATH}/bin/gocipher ./gocipher/main.go
-
-bld3:
-	go build -i -race -v -o ${GOPATH}/bin/godepen ./godependency/main.go
-
-bld4:
-	go build -i -race -v -o ${GOPATH}/bin/gobulkdata ./gobulkdata/main.go
-
-bld5:
-	go build -i -race -v -o ${GOPATH}/bin/servermain ./gochat/server/server.go
-	go build -i -race -v -o ${GOPATH}/bin/clientmain ./gochat/client/client.go
-
-bld6:
-	go build -i -race -v -o ${GOPATH}/bin/gosubsrt ./gosubsrt/main.go
-
-bld7:
-	go build -i -race -v -o ${GOPATH}/bin/gocookie ./gocookie/main.go
-
-bld8:
-	go build -i -race -v -o ${GOPATH}/bin/goapitest ./goapitest/main.go
-
-bld9:
-	go build -i -race -v -o ${GOPATH}/bin/gogentype ./gogentype/main.go
-
-bld10:
-	go build -i -race -v -o ${GOPATH}/bin/gogenkey ./gogentlscert/main.go
-
-bldall:bld1 bld2 bld3 bld4 bld5 bld6 bld7 bld8 bld9 bld10
+.PHONY: run-cookie
+run-cookie:
+	go run -v ./cookie/main.go github.com
 
 
 ###############################################################################
-# Execution
+# chat
 ###############################################################################
-testpkg:
-	gotestfile -n new-package-name
-
-enc:
-	gocipher -m e abcdefg
-
-dec:
-	gocipher -m d B4VmdhJuWkTXxyvTTDCG5w==
-
-dep:
-	godepen -target ${HOME}/work/go/src/github.com
-
-bulk:
-	gobulkdata -f ${HOME}/work/go/src/github.com/hiromaily/gotools/text.txt -l 20
-
-chat:
+.PHONY: run-chat
+run-chat:
 	#localhost:8000
-	./servermain &
-	./clientmain
+	go run -v ./chat/server/server.go
+	go run -v ./chat/client/client.go
 
-srt:
-	gosubsrt -f ${HOME}/work/go/src/github.com/hiromaily/gotools/gosubsrt/srtfiles/Silicon.Valley.S02E01.srt -t 6.2
 
-cookie:
-	gocookie localhost
-	#gocookie gist.github.com
+###############################################################################
+# encryption
+#  encrypt/decrypt
+###############################################################################
+.PHONY: run-encrypt
+run-encrypt:
+	go run -v ./encryption/main.go -m e secret-string
 
-apitest:
-	goapitest -m user
-	goapitest -m role -r 1
+.PHONY: run-decrypt
+run-decrypt:
+	go run -v ./encryption/main.go -m d AMd/qKM1itq9ojh9nVEzDg==
 
-gentype:
-	gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "date": "2017-07-26T11:10:15+02:00", "obj": {"child":100}}'
 
-gentype2:
-	gogentype -file $(PWD)/gogentype/json/teachers.json
+###############################################################################
+# gen-testfile
+#  generate *_test.go template at current package(directory)
+###############################################################################
+.PHONY: run-gen-testfile
+run-gen-testfile:
+	go run -v ./gen-testfile/main.go -n new-package-name
 
-gentls:
-	sudo gogenkey --host hy
+
+###############################################################################
+# gen-tls-cert
+#  generate TLS cert file (cert.pem/key.pem)
+###############################################################################
+.PHONY: run-gen-tls-cert
+run-gen-tls-cert:
+	go run -v ./gen-tls-cert/main.go -host hy
+
+
+###############################################################################
+# gen-struct
+#  generate go struct type from json data
+###############################################################################
+.PHONY: run-gen-struct
+run-gen-struct:
+	go run -v ./gen-struct/main.go -file ./json/teachers.json
+
+.PHONY: run-gen-struct2
+run-gen-struct2:
+	go run -v ./gen-struct/main.go -json ./json/teachers.json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "date": "2017-07-26T11:10:15+02:00", "obj": {"child":100}}'
+
+
+###############################################################################
+# go-dependency
+#  show dependencies of spacific package
+#    cd ${GOPATH}/src/github.com/hiromaily/go-microservice
+#    git checkout e1a9a740d0abfea5d190daa2d7b033799a06fe7f
+#
+#    cd ${GOPATH}/src/github.com/hiromaily/go-nats
+#    git checkout 1f88d6d0063e2b3d6bba10208ad596905ac40dbb
+#    ...
+###############################################################################
+.PHONY: run-go-dependency
+run-go-dependency:
+	go run -v ./go-dependency/main.go -target ${HOME}/work/go/src/github.com/hiromaily
+
+
+###############################################################################
+# substr
+#  adjust time at srt file
+###############################################################################
+.PHONY: run-substr
+run-substr:
+	go run -v ./subsrt/main.go -f ./xxxxx.srt -t -1.5
+
+
+###############################################################################
+# Utility
+###############################################################################
+.PHONY: clean
+clean:
+	rm -rf cert.pem key.pem

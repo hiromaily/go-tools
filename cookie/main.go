@@ -9,7 +9,7 @@ import (
 
 func usage() {
 	fmt.Fprintf(os.Stderr, "usage: %s [domain]\n", os.Args[0])
-	os.Exit(2)
+	os.Exit(1)
 }
 
 func main() {

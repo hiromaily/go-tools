@@ -5,12 +5,13 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	lg "github.com/hiromaily/golibs/log"
-	tm "github.com/hiromaily/golibs/time"
-	u "github.com/hiromaily/golibs/utils"
 	"io/ioutil"
 	"os"
 	"strings"
+
+	lg "github.com/hiromaily/golibs/log"
+	tm "github.com/hiromaily/golibs/time"
+	u "github.com/hiromaily/golibs/utils"
 )
 
 var (
@@ -22,26 +23,17 @@ var usage = `Usage: %s [options...]
 Options:
   -json  Json String Data.
 e.g.:
-  gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "date": "2017-07-26T11:10:15+02:00", "obj": {"child":100}}'
+  gen-struct -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "date": "2017-07-26T11:10:15+02:00", "obj": {"child":100}}'
  or
-  gogentype -file sample.json
+  gen-struct -file sample.json
 
 Note:null value can not be detected proper type.
 `
 
-// Params is parameter for template file
-type Params struct {
-	Name      string
-	Uppercase string
-}
-
 func init() {
-	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GoGenType]", "", "hiromaily")
-
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))
 	}
-
 	flag.Parse()
 
 	if *jsonString == "" && *file == "" {
@@ -50,23 +42,24 @@ func init() {
 		os.Exit(1)
 		return
 	}
-	//lg.Debug(*jsonString)
 }
 
 func main() {
+	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GoGenType]", "", "hiromaily")
+
 	if *jsonString != "" {
-		handleJsonData()
+		handleJSONData()
 	}
 	if *file != "" {
-		handleJsonFile()
+		handleJSONFile()
 	}
 }
 
-func handleJsonData() {
-	var unmarshaledJson map[string]interface{}
+func handleJSONData() {
+	var unmarshaledJSON map[string]interface{}
 
 	//1. json
-	err := json.Unmarshal([]byte(*jsonString), &unmarshaledJson)
+	err := json.Unmarshal([]byte(*jsonString), &unmarshaledJSON)
 	if err != nil {
 		lg.Errorf("After calling json.Unmarshal(): %v", err)
 		return
@@ -74,11 +67,11 @@ func handleJsonData() {
 	//lg.Debug(unmarshaledJson)
 
 	//2. handle response and output json
-	printType(unmarshaledJson, 1)
+	printType(unmarshaledJSON, 1)
 }
 
-func handleJsonFile() {
-	var unmarshaledJson map[string]interface{}
+func handleJSONFile() {
+	var unmarshaledJSON map[string]interface{}
 
 	//1. json load
 	jsonByte, err := loadJSONFile(*file)
@@ -88,15 +81,14 @@ func handleJsonFile() {
 	}
 
 	//2. json
-	err = json.Unmarshal(jsonByte, &unmarshaledJson)
+	err = json.Unmarshal(jsonByte, &unmarshaledJSON)
 	if err != nil {
 		lg.Errorf("After calling json.Unmarshal(): %v", err)
 		return
 	}
-	//lg.Debug(unmarshaledJson)
 
 	//3. handle response and output json
-	printType(unmarshaledJson, 1)
+	printType(unmarshaledJSON, 1)
 
 }
 
@@ -148,7 +140,7 @@ func typeConvert(typeStr string, value interface{}) string {
 
 func handleSliceValue(value interface{}) (string, interface{}) {
 	sliceIfc := u.ItoSI(value)
-	if sliceIfc != nil && len(sliceIfc) > 0 {
+	if len(sliceIfc) > 0 {
 		//check type
 		typeStr := u.CheckInterfaceByIf(sliceIfc[0])
 		typeStr = typeConvert(typeStr, sliceIfc[0])

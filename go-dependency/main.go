@@ -3,15 +3,16 @@ package main
 import (
 	"flag"
 	"fmt"
-	lg "github.com/hiromaily/golibs/log"
-	"github.com/hiromaily/golibs/tmpl"
-	u "github.com/hiromaily/golibs/utils"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	lg "github.com/hiromaily/golibs/log"
+	"github.com/hiromaily/golibs/tmpl"
+	u "github.com/hiromaily/golibs/utils"
 )
 
 const (
@@ -28,13 +29,13 @@ type CmdLines struct {
 }
 
 var (
-	cmdLines  = []CmdLines{}
+	cmdLines  = make([]CmdLines, 0)
 	targetDir = flag.String("target", "", "target github.com directory path")
 	usage     = `Usage: %s [options...]
 Options:
   -target  path of github.com directory
 e.g.:
-  godepen -target ${HOME}/work/go/src/github.com
+  go-dependency -target ${HOME}/work/go/src/github.com
 `
 )
 
@@ -81,12 +82,9 @@ func CheckDirectory(target string) {
 }
 
 func init() {
-	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GoDependency]", "", "hiromaily")
-
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, fmt.Sprintf(usage, os.Args[0]))
 	}
-
 	flag.Parse()
 
 	if *targetDir == "" {
@@ -98,6 +96,8 @@ func init() {
 }
 
 func main() {
+	lg.InitializeLog(lg.DebugStatus, lg.TimeShortFile, "[GOTOOLS GoDependency]", "", "hiromaily")
+
 	// targeted directory
 	if *targetDir == "" {
 		*targetDir = os.Getenv("GOPATH") + GoGitDir
@@ -108,14 +108,13 @@ func main() {
 		//make sh script from template
 		//fmt.Printf("\n%#v\n\n", cmdLines)
 		goPath := os.Getenv("GOPATH")
-		tpl, err := template.ParseFiles(goPath + "/src/github.com/hiromaily/gotools/godependency/templates/base.tpl")
+		tpl, err := template.ParseFiles(goPath + "/src/github.com/hiromaily/gotools/go-dependency/templates/base.tpl")
 		u.GoPanicWhenError(err)
 
 		result, err := tmpl.FileTempParser(tpl, cmdLines)
 		u.GoPanicWhenError(err)
 
 		//output
-		//TODO:ファイルに出力
 		fmt.Println(result)
 	}
 }
