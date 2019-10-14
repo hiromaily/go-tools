@@ -8,201 +8,91 @@
 go tools
 
 
-# 1. gocipher [For Development]
+# 1. encryption
 Create encrypted string both (encode and decode)
-
-## Installation
-```
-$ go get github.com/hiromaily/gotools/gocipher
-```
-
 It requires below environment variable, e.g. 
 ```
-export 'ENC_KEY=M#XF#R+gaKFvJ_<'
-export 'ENC_IV=@~wK-3OlQ<c2y@DA'
+export 'ENC_KEY=M#XF#R+XuKF4J_<'
+export 'ENC_IV=@~nL-3OlQ<c2y@pA'
 ```
 
 ## Usage
 ```
 Options:
-  -m  e:encode, d:decode.
+  -m  e: encode, d: decode.
 e.g.:
-  gocipher -m e xxxxxxxx
+  encryption -m e xxxxxxxx
     or
-  gocipher -m d xxxxxxxx
+  encryption -m d xxxxxxxx
 ```
 
 ## Example
 ```
-$ gocipher -m e secret_string
+$ encryption -m e secret_string
  => gtBl3kNqSAJGvJjnvUU9HQ==
 
-$ gocipher -m d gtBl3kNqSAJGvJjnvUU9HQ==
+$ encryption -m d gtBl3kNqSAJGvJjnvUU9HQ==
  => secret_string
 ```
 
 
-# 2. gocookie [For Development]
+# 2. cookie [For Development]
 Retrieve cookie data by domain from chrome.  
-(This is not my development.)
 
 ## Usage
 ```
 e.g.:
-  gocookie domain.com
+  cookie github.com
 ```
 
 ## Example
 ```
-$ gocookie localhost
+$ cookie localhost
  => localhost/key: value
 ```
 
 
-# 3. gogentlscert [For Development]
+# 3. gen-tls-cert [For Development]
 Generate TLS certificate files using golang package.  
-()
 
 ## Usage
 ```
 e.g.:
-  sudo gogenkey --host hy
+  gen-tls-cert -host hy
 ```
 
 ## Example
 ```
-$ sudo gogenkey --host hy
+$ gen-tls-cert -host hy
  => 
 2017/06/28 21:06:43 written cert.pem
 2017/06/28 21:06:43 written key.pem
 ```
 
 
-# 4. goapitest [For Development]
-This is for API Test
-
-## Usage
-```
-e.g.:
-  goapitest -m user
-```
-
-## Example
-```
-$ goapitest -m user
- => 
-{
-  "success": true,
-  "records": [
-    {
-      "id": "xxxxxx",
-      "attr": null,
-      "name": "firstlast0013",
-    }
-  ]
-}
-```
-
-## Create New API Endpoint
-1. add model file in models/  
-   It's easier to define structure by `gogentype` in gotools with json raw data.
-2. add condition at main() in main.go. 
-
-
-# 5. gotestfile [For Golang Development]
+# 4. go-testfile [For Golang Development]
 Create template file of xxx_test.go
 
-## Installation
-```
-$ go get github.com/hiromaily/gotools/gotestfile
-```
-
 ## Usage
 ```
-Usage: gotestfile [options...]
+Usage: go-testfile [options...]
 
 Options:
   -n     package name
 
 e.g.
- $ gotestfile -n new-package-name
+ $ go-testfile -n new-package-name
 ```
 
 ## Example
 ```
-$ gotestfile -n newpkg
+$ go-testfile -n newpkg
  => generate newpkg_test.go file
 ```
-```
-package newpkg_test
-
-import (
-	. "github.com/hiromaily/golibs/newpkg"
-	//lg "github.com/hiromaily/golibs/log"
-	tu "github.com/hiromaily/golibs/testutil"
-	"os"
-	"testing"
-)
-
-//-----------------------------------------------------------------------------
-// Test Framework
-//-----------------------------------------------------------------------------
-// Initialize
-func init() {
-	tu.InitializeTest("[Newpkg]")
-}
-
-func setup() {
-}
-
-func teardown() {
-}
-
-func TestMain(m *testing.M) {
-	setup()
-
-	code := m.Run()
-
-	teardown()
-
-	os.Exit(code)
-}
-
-//-----------------------------------------------------------------------------
-// function
-//-----------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------
-// Test
-//-----------------------------------------------------------------------------
-func TestNewpkg(t *testing.T) {
-	//if err != nil {
-	//	t.Errorf("TestNewpkg error: %s", err)
-	//}
-}
-
-//-----------------------------------------------------------------------------
-// Benchmark
-//-----------------------------------------------------------------------------
-func BenchmarkNewpkg(b *testing.B) {
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		//
-		//_ = CallSomething()
-		//
-	}
-	b.StopTimer()
-}
-```
 
 
-# 6. gogentype [For Golang Development]
+# 5. gen-struct [For Golang Development]
 Create golang type struct from json data.
-
-## Installation
-```
-$ go get github.com/hiromaily/gotools/gogentype
-```
 
 ## Usage
 ```
@@ -210,16 +100,16 @@ Usage: gogentype [options...]
 Options:
   -json  Package name.
 e.g.:
-  gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "obj": {"child":100}}'
+  gen-struct -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "obj": {"child":100}}'
  or
-  gogentype -file sample.json
+  gen-struct -file sample.json
 
 Note:null value can not be detected proper type.
 ```
 
 ## Example
 ```
-$ gogentype -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "date": "2017-07-26T11:10:15+02:00", "obj": {"child":100}}' => generate newpkg_test.go
+$ gen-struct -json '{"str": "xxxx", "slice": [1,2,3], "sliceempty": [], "null": null, "int": 10, "zero": 0, "bool": true, "date": "2017-07-26T11:10:15+02:00", "obj": {"child":100}}' => generate newpkg_test.go
  >>
 type TypeName1 struct {
     Str	        string      `json:"str"`
@@ -236,6 +126,7 @@ type TypeName2 struct {
     Child       int         `json:"child"`
 }
 ```
+
 ```
 [sample.json]
 {
@@ -260,14 +151,8 @@ type TypeName2 struct {
 ```
 
 
-# 7. gosubsrt [For Hobby]
+# 6. subsrt [For Hobby]
 Tweaking time lag of srt files.
-
-
-## Installation
-```
-$ go get github.com/hiromaily/gotools/gosubsrt
-```
 
 ## Usage
 ```
@@ -275,13 +160,13 @@ Options:
   -f  path of srt file.
   -t  time of tweaking duration.
 e.g.:
-  gosubsrt -f ./xxxxx.srt -t 1.5
+  subsrt -f ./xxxxx.srt -t 1.5
 ```
 
 ## Example
 ```
 prepare srt files somewhere
-$ gosubsrt -f ./gosubsrt/srtfiles/sample.srt -t 6.2
+$ subsrt -f ./gosubsrt/srtfiles/sample.srt -t 6.2
 
 [before]
 1
@@ -295,21 +180,16 @@ Ah! Fuck. Yeah, it doesn't matter.
 ```
 
 
-# 8. godependency [WIP]
+# 7. go-dependency [WIP]
 Create shell script file listed current commit id form outer packages like github.com directory.  
 It has developed in progress yet.
-
-## Installation
-```
-$ go get github.com/hiromaily/gotools/godependency
-```
 
 ## Usage
 ```
 Options:
   -target  path of github.com directory
 e.g.:
-  $ godepen -target ${HOME}/work/go/src/github.com
+  $ go-dependency -target ${HOME}/work/go/src/github.com
 ```
 
 ## Example
@@ -324,23 +204,5 @@ git checkout d72b0151351a13d0421b763b88f791469c4f5dc7
 ```
 
 
-# 9. gobulkdata [WIP]
-Create CSV test dummy data
-
-## Installation
-```
-$ go get github.com/hiromaily/gotools/gobulkdata
-```
-
-## Usage
-```
-Options:
-  -f  File name.
-  -t  File type.
-e.g.:
-  gobulkdata -f ${HOME}/work/go/src/github.com/hiromaily/gotools/text.txt -l 20
-```
-
-
-# 10. gochat [WIP]
+# 8. gochat [WIP]
 chatting between client and server by TCP connection
